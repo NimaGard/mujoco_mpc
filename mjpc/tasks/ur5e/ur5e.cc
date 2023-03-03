@@ -23,10 +23,10 @@
 namespace mjpc {
 
 std::string UR5e::Name() const {
-  return GetModelPath("ur5e/task.xml");
+  return "ur5e";
 }
 std::string UR5e::XmlPath() const {
-  return std::string();
+  return GetModelPath("ur5e/task.xml");
 }
 void UR5e::Residual(const mjModel *model, const mjData *data, double *residual) const {
 
