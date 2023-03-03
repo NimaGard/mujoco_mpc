@@ -249,6 +249,8 @@ add_library(
   tasks/swimmer/swimmer.h
   tasks/walker/walker.cc
   tasks/walker/walker.h
+  tasks/ur5e/ur5e.cc
+  tasks/ur5e/ur5e.h
   planners/planner.cc
   planners/planner.h
   planners/policy.h
