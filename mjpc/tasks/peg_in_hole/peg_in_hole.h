@@ -12,26 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef MJPC_TASKS_PEG_IN_HOLE_PEG_IN_HOLE_H_
+#define MJPC_TASKS_PEG_IN_HOLE_PEG_IN_HOLE_H_
+
 #include <string>
 
-#include "mjpc/tasks/ur5e/ur5e.h"
-#include "mjpc/utilities.h"
-#include "mjpc/task.h"
-
 #include <mujoco/mujoco.h>
+#include <mjpc/task.h>
 
 namespace mjpc {
-
-std::string UR5e::Name() const {
-  return "ur5e";
-}
-std::string UR5e::XmlPath() const {
-  return GetModelPath("ur5e/task.xml");
-}
-void UR5e::Residual(const mjModel *model, const mjData *data, double *residual) const {
-
-}
-void UR5e::Transition(const mjModel *model, mjData *data, mjvScene *scene) {
-  Task::Transition(model, data, scene);
-}
+class PegInHole : public Task {
+ public:
+  std::string Name() const override;
+  std::string XmlPath() const override;
+  void Residual(const mjModel* model, const mjData* data,
+                double* residual) const override;
+  void Transition(const mjModel* model, mjData* data) override;
+  void Reset(const mjModel* model) override;
+};
 }  // namespace mjpc
+
+
+#endif //MJPC_TASKS_PEG_IN_HOLE_PEG_IN_HOLE_H_

@@ -1,6 +1,5 @@
 <mujoco model="panda">
   <compiler angle="radian" meshdir="assets" autolimits="true"/>
-
   <option timestep="0.003"/>
 
   <default>
