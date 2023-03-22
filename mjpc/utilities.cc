@@ -24,15 +24,14 @@
 #include <new>
 #include <string>
 #include <string_view>
-#include <unordered_map>
 #include <vector>
 
 // DEEPMIND INTERNAL IMPORT
 #include <absl/container/flat_hash_map.h>
+#include <absl/log/check.h>
 #include <absl/strings/match.h>
 #include <absl/strings/str_cat.h>
 #include <absl/strings/str_split.h>
-#include <mujoco/mjmodel.h>
 #include <mujoco/mujoco.h>
 #include "mjpc/array_safety.h"
 
@@ -232,11 +231,8 @@ void CheckSensorDim(const mjModel* model, int residual_size) {
     }
   }
   if (user_sensor_dim != residual_size) {
-    char msg[1024];
-    snprintf(msg, sizeof(msg),
-             "mismatch between total user-sensor dimension %d "
-             "and residual size %d", user_sensor_dim, residual_size);
-    mju_error(msg);
+    mju_error("mismatch between total user-sensor dimension %d "
+              "and residual size %d", user_sensor_dim, residual_size);
   }
 }
 
