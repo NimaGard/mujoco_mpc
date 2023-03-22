@@ -12,33 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MJPC_TASKS_QUADROTOR_QUADROTOR_H_
-#define MJPC_TASKS_QUADROTOR_QUADROTOR_H_
+#ifndef MJPC_MJPC_TASKS_MANIPULATION_MANIPULATION_H_
+#define MJPC_MJPC_TASKS_MANIPULATION_MANIPULATION_H_
 
-#include <string>
+
 #include <mujoco/mujoco.h>
 #include "mjpc/task.h"
+#include "mjpc/tasks/manipulation/common.h"
 
 namespace mjpc {
-class Quadrotor : public Task {
+namespace manipulation {
+class Bring : public Task {
  public:
   std::string Name() const override;
   std::string XmlPath() const override;
-// --------------- Residuals for quadrotor task ---------------
-//   Number of residuals: 5
-//     Residual (0): position - goal position
-//     Residual (1): orientation - goal orientation
-//     Residual (2): linear velocity - goal linear velocity
-//     Residual (3): angular velocity - goal angular velocity
-//     Residual (4): control
-//   Number of parameters: 6
-// ------------------------------------------------------------
   void Residual(const mjModel* model, const mjData* data,
                 double* residual) const override;
   void Transition(const mjModel* model, mjData* data) override;
+  void Reset(const mjModel* model) override;
 
-  int current_mode_;
+ private:
+  ModelValues model_vals_;
 };
+}  // namespace manipulation
 }  // namespace mjpc
 
-#endif  // MJPC_TASKS_QUADROTOR_QUADROTOR_H_
+
+#endif  // MJPC_MJPC_TASKS_MANIPULATION_MANIPULATION_H_
