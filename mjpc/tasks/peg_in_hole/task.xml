@@ -1,4 +1,0 @@
-<mujoco model="Peg in Hole">
-    <include file="../common.xml"/>
-    <size memory="4K"/>
-</mujoco>

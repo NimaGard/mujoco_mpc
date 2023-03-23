@@ -12,25 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MJPC_TASKS_PEG_IN_HOLE_PEG_IN_HOLE_H_
-#define MJPC_TASKS_PEG_IN_HOLE_PEG_IN_HOLE_H_
-
 #include <string>
 
+#include "peg_in_hole.h"
+#include "mjpc/utilities.h"
+#include "mjpc/task.h"
+
 #include <mujoco/mujoco.h>
-#include <mjpc/task.h>
 
 namespace mjpc {
-class PegInHole : public Task {
- public:
-  std::string Name() const override;
-  std::string XmlPath() const override;
-  void Residual(const mjModel* model, const mjData* data,
-                double* residual) const override;
-  void Transition(const mjModel* model, mjData* data) override;
-  void Reset(const mjModel* model) override;
-};
+namespace manipulation {
+std::string PegInHole::Name() const {
+  return "Panda Peg in Hole";
+}
+std::string PegInHole::XmlPath() const {
+  return GetModelPath("manipulation/task_peg_in_hole.xml");
+}
+void PegInHole::Residual(const mjModel *model, const mjData *data, double *residual) const {
+}
+void PegInHole::Transition(const mjModel *model, mjData *data) {
+  Task::Transition(model, data);
+}
+
+void PegInHole::Reset(const mjModel *model) {
+
+}
+}  // namespace manipulation
 }  // namespace mjpc
-
-
-#endif //MJPC_TASKS_PEG_IN_HOLE_PEG_IN_HOLE_H_
