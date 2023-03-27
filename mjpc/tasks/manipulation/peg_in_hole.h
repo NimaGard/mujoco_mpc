@@ -15,10 +15,10 @@
 #ifndef MJPC_TASKS_MANIPULATION_PEG_IN_HOLE_TASK_H_
 #define MJPC_TASKS_MANIPULATION_PEG_IN_HOLE_TASK_H_
 
-#include <string>
 
 #include <mujoco/mujoco.h>
 #include "mjpc/task.h"
+#include "mjpc/tasks/manipulation/common.h"
 
 namespace mjpc {
 namespace manipulation {
@@ -30,6 +30,10 @@ class PegInHole : public Task {
                 double *residual) const override;
   void Transition(const mjModel *model, mjData *data) override;
   void Reset(const mjModel *model) override;
+
+ private:
+  ModelValues model_vals_;
+
 };
 }  // namespace manipulation
 }  // namespace mjpc

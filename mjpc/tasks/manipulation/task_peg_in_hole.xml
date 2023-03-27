@@ -1,132 +1,76 @@
-<mujoco model="Panda Peg in Hole">
+<mujoco model="Peg in Hole">
     <include file="../common.xml"/>
 
-    <option timestep="0.001" cone="elliptic" integrator="implicit">
-        <flag multiccd="enable"/>
-    </option>
-    <size memory="1M" nuserdata="1"/>
+    <size memory="1M"/>
 
     <custom>
-        <numeric name="task_transition" data="1" />
         <numeric name="agent_planner" data="0" />
-        <numeric name="agent_horizon" data="0.6" />
-        <numeric name="agent_integrator" data="2" />
-        <numeric name="agent_timestep" data="0.005" />
+        <numeric name="agent_horizon" data="0.5" />
+        <numeric name="agent_timestep" data="0.009" />
         <numeric name="agent_policy_width" data="0.0035" />
         <numeric name="sampling_trajectories" data="60"/>
-        <numeric name="sampling_spline_points" data="5" />
-        <numeric name="sampling_exploration" data="0.04" />
+        <numeric name="sampling_spline_points" data="7" />
+        <numeric name="sampling_exploration" data="0.1" />
         <numeric name="gradient_spline_points" data="6" />
     </custom>
 
-    <keyframe>
-        <key name="home" qpos="
-    0.612639 0.152204 0.0872751
-    0.0747279 0.691609 -0.36265 0.620144
-    0.530228 -0.0789289 0.0670311
-    -0.033621 0.706272 0.0335937 0.706344
-    0.01 0.01 0.01 -0.5 0.01 0.275015 -0.0942014
-    0.00129982 0.00201141 0.00417223 -0.00817256 0.00129982 0.00200828 0.00417081 -0.00817298"/>
-    </keyframe>
-
-    <statistic extent="0.7" center="0.7 0 0.2"/>
+    <statistic extent="1.5" center="0.1 0.2 0.3"/>
 
     <visual>
         <quality shadowsize="8192"/>
-        <global azimuth="90" elevation="-30"/>
+        <global azimuth="180" elevation="-30"/>
+        <scale framelength=".3" framewidth=".03"/>
     </visual>
 
     <default>
-        <default class="red_rgb_object/">
-            <default class="red_rgb_object/visual">
-                <geom contype="0" conaffinity="0" group="1" rgba="1 0 0 1" mass="0.001"/>
-            </default>
-            <default class="red_rgb_object/collision">
-                <geom contype="1" conaffinity="1" condim="6" friction="0.5 0.0050000000000000001 0.0001" mass="0.20000000000000001" solref="0.0040000000000000001 1"/>
-            </default>
-        </default>
-        <default class="green_rgb_object/">
-            <default class="green_rgb_object/visual">
-                <geom contype="0" conaffinity="0" group="1" rgba="0 1 0 1" mass="0.001"/>
-            </default>
-            <default class="green_rgb_object/collision">
-                <geom contype="1" conaffinity="1" condim="6" group="4" friction="0.5 0.0050000000000000001 0.0001" mass="0.20000000000000001" solref="0.0040000000000000001 1"/>
-            </default>
-        </default>
-        <default class="blue_rgb_object/">
-            <default class="blue_rgb_object/visual">
-                <geom contype="0" conaffinity="0" group="1" rgba="0 0 1 1" mass="0.001"/>
-            </default>
-            <default class="blue_rgb_object/collision">
-                <geom contype="1" conaffinity="1" condim="6" group="4" friction="0.5 0.0050000000000000001 0.0001" mass="0.20000000000000001" solref="0.0040000000000000001 1"/>
-            </default>
-        </default>
+        <geom solref=".001 1"/>
     </default>
 
+    <compiler texturedir="./textures"/>
+
     <worldbody>
-        <site name="world" xyaxes="-1 0 0 0  1 0" group="5"/>
-        <light pos="0   -1 1.5" dir=".5 .8 -1" diffuse="0.5 0.5 0.5" specular="0.3 0.3 0.3" castshadow="true" cutoff="30"/>
-        <light pos="1.2 -1 1.5" dir="-.5 .8 -1" diffuse="0.5 0.5 0.5" specular="0.3 0.3 0.3" castshadow="true" cutoff="30"/>
+        <site name="world"/>
+        <light pos="0 -0.1 0.5" dir="0 0.2 -1" diffuse="0.7 0.7 0.7" specular="0.3 0.3 0.3"
+               directional="true" castshadow="true"/>
         <geom name="floor" pos="0 0 0" size="0 0 0.05" type="plane" material="blue_grid"/>
-        <site name="reset" pos="0.2 0 0.3"/>
-        <site name="pedestal" pos="0.45 0 0"/>
-        <geom name="pedestal" pos="0.45 0 0.005" type="cylinder" size=".025 .005" class="red_rgb_object/collision"/>
-        <body name="object">
-            <freejoint name="red_rgb_object/"/>
-            <geom name="red_rgb_object/red_rgb_object_00_collision" class="red_rgb_object/collision" rgba="1 0 0 1" type="box" size="0.011 0.0151 0.021" pos="0 0 0"/>
-            <site name="0" pos="0.04 0.04 0.04" group="5"/>
-            <site name="1" pos="-.04 0.04 0.04" group="5"/>
-            <site name="2" pos="0.04 -.04 0.04" group="5"/>
-            <site name="3" pos="-.04 -.04 0.04" group="5"/>
-            <site name="4" pos="0.04 0.04 -.04" group="5"/>
-            <site name="5" pos="-.04 0.04 -.04" group="5"/>
-            <site name="6" pos="0.04 -.04 -.04" group="5"/>
-            <site name="7" pos="-.04 -.04 -.04" group="5"/>
+
+        <body name="target" mocap="true" pos="0.6 0.4 0.05">
+            <geom name="target"  type="cylinder" size="0.02 0.03 0.02" contype="0" conaffinity="0" rgba=".5 .5 .5 .3"/>
+            <site name="target1" type="cylinder" pos="0  .026 0" size="0.021 0.005 0.021" rgba="1 .1 .1 .3"/>
+            <site name="target2" type="cylinder" pos="0 -.026 0" size="0.021 0.005 0.021" rgba=".1 .1 1 .3"/>
         </body>
-        <body name="target">
+
+        <body name="box" pos="0.4 0.5 0.2">
             <freejoint/>
-            <geom name="target/target_00_collision" rgba=".5 .5 .7 1" class="red_rgb_object/collision" type="box" size="0.01 0.015 0.02" contype="2" conaffinity="1"/>
-            <site name="0t" pos="0.04 0.04 0.04" group="5"/>
-            <site name="1t" pos="-.04 0.04 0.04" group="5"/>
-            <site name="2t" pos="0.04 -.04 0.04" group="5"/>
-            <site name="3t" pos="-.04 -.04 0.04" group="5"/>
-            <site name="4t" pos="0.04 0.04 -.04" group="5"/>
-            <site name="5t" pos="-.04 0.04 -.04" group="5"/>
-            <site name="6t" pos="0.04 -.04 -.04" group="5"/>
-            <site name="7t" pos="-.04 -.04 -.04" group="5"/>
+            <geom name="box"  type="cylinder" size="0.02 0.03 0.02" priority="1" condim="6" friction="1 .01 .003"/>
+            <site name="box1" type="cylinder" pos="0  .026 0" size="0.021 0.005 0.021" rgba="1 .1 .1 1"/>
+            <site name="box2" type="cylinder" pos="0 -.026 0" size="0.021 0.005 0.021" rgba=".1 .1 1 1"/>
         </body>
     </worldbody>
 
     <contact>
-        <exclude body1="object" body2="target"/>
+        <exclude body1="world" body2="left_finger"/>
+        <exclude body1="world" body2="right_finger"/>
+        <exclude body1="left_finger" body2="right_finger"/>
     </contact>
 
+    <keyframe>
+        <key name="home" qpos="-0.026895 0.391451 0.0199961 0.959693 0 0 -0.281049 1.00714 0.42312 -0.00198696 -1.65569 -0.05794 2.28189 0.393188 0.005 0.005"/>
+    </keyframe>
+
     <sensor>
-        <user name="Reach" dim="3" user="2 1 0 5 0.005"/>
-        <user name="Bring" dim="8" user="6 .2 0 1 0.01"/>
-        <user name="Careful" dim="1" user="6 .2 0 1 0.01"/>
-        <user name="Away" dim="1" user="6 0 0 1 0.01"/>
-        <framepos name="hand" objtype="site" objname="pinch"/>
-        <framepos name="object" objtype="body" objname="object"/>
-        <framepos name="0" objtype="site" objname="0"/>
-        <framepos name="1" objtype="site" objname="1"/>
-        <framepos name="2" objtype="site" objname="2"/>
-        <framepos name="3" objtype="site" objname="3"/>
-        <framepos name="4" objtype="site" objname="4"/>
-        <framepos name="5" objtype="site" objname="5"/>
-        <framepos name="6" objtype="site" objname="6"/>
-        <framepos name="7" objtype="site" objname="7"/>
-        <framepos name="0t" objtype="site" objname="0t"/>
-        <framepos name="1t" objtype="site" objname="1t"/>
-        <framepos name="2t" objtype="site" objname="2t"/>
-        <framepos name="3t" objtype="site" objname="3t"/>
-        <framepos name="4t" objtype="site" objname="4t"/>
-        <framepos name="5t" objtype="site" objname="5t"/>
-        <framepos name="6t" objtype="site" objname="6t"/>
-        <framepos name="7t" objtype="site" objname="7t"/>
+        <user name="Reach" dim="3" user="2 1 0 5 0.01"/>
+        <user name="Bring" dim="6" user="2 .1 0 1 0.003"/>
+        <framepos name="hand" objtype="site" objname="eeff"/>
+        <framepos name="box" objtype="geom" objname="box"/>
+        <framepos name="box1" objtype="site" objname="box1"/>
+        <framepos name="box2" objtype="site" objname="box2"/>
+        <framepos name="target" objtype="geom" objname="target"/>
+        <framepos name="target1" objtype="site" objname="target1"/>
+        <framepos name="target2" objtype="site" objname="target2"/>
+        <framepos name="trace0" objtype="site" objname="touch_left"/>
+        <framepos name="trace1" objtype="site" objname="touch_right"/>
     </sensor>
 
-    <include file="panda_robotiq.xml"/>
+    <include file="panda_1.xml"/>
 </mujoco>
-
-
