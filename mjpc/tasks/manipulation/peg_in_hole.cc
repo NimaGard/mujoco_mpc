@@ -66,19 +66,23 @@ void PegInHole::Transition(const mjModel *model, mjData *data) {
   if (data->time > 0 && bring_dist < .015) {
     // box:
     absl::BitGen gen_;
-    data->qpos[0] = absl::Uniform<double>(gen_, -.5, .5);
-    data->qpos[1] = absl::Uniform<double>(gen_, -.5, .5);
-    data->qpos[2] = .05;
+    data->qpos[0] = 0.45;
+    data->qpos[1] = 0;
+    data->qpos[2] = 0.15;
+    data->qpos[3] = 1.0;
+    data->qpos[4] = 0;
+    data->qpos[5] = 1.0;
+    data->qpos[6] = 0.0;
 
     // target:
-    data->mocap_pos[0] = absl::Uniform<double>(gen_, -.5, .5);
-    data->mocap_pos[1] = absl::Uniform<double>(gen_, -.5, .5);
-    data->mocap_pos[2] = absl::Uniform<double>(gen_, .03, 1);
-    data->mocap_quat[0] = absl::Uniform<double>(gen_, -1, 1);
-    data->mocap_quat[1] = absl::Uniform<double>(gen_, -1, 1);
-    data->mocap_quat[2] = absl::Uniform<double>(gen_, -1, 1);
-    data->mocap_quat[3] = absl::Uniform<double>(gen_, -1, 1);
-    mju_normalize4(data->mocap_quat);
+    data->qpos[7+0] = 0.45;
+    data->qpos[7+1] = 0;
+    data->qpos[7+2] = 0.15;
+    data->qpos[7+3] = absl::Uniform<double>(gen_, -1, 1);
+    data->qpos[7+4] = absl::Uniform<double>(gen_, -1, 1);
+    data->qpos[7+5] = absl::Uniform<double>(gen_, -1, 1);
+    data->qpos[7+6] = absl::Uniform<double>(gen_, -1, 1);
+    mju_normalize4(data->qpos + 13);
   }
 }
 

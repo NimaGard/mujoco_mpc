@@ -28,23 +28,55 @@
 
     <compiler texturedir="./textures"/>
 
+    <default>
+        <default class="red_rgb_object/">
+            <default class="red_rgb_object/visual">
+                <geom contype="0" conaffinity="0" group="1" rgba="1 0 0 1" mass="0.001"/>
+            </default>
+            <default class="red_rgb_object/collision">
+                <geom contype="1" conaffinity="1" condim="6" friction="0.5 0.0050000000000000001 0.0001" mass="0.20000000000000001" solref="0.0040000000000000001 1"/>
+            </default>
+        </default>
+        <default class="green_rgb_object/">
+            <default class="green_rgb_object/visual">
+                <geom contype="0" conaffinity="0" group="1" rgba="0 1 0 1" mass="0.001"/>
+            </default>
+            <default class="green_rgb_object/collision">
+                <geom contype="1" conaffinity="1" condim="6" group="4" friction="0.5 0.0050000000000000001 0.0001" mass="0.20000000000000001" solref="0.0040000000000000001 1"/>
+            </default>
+        </default>
+        <default class="blue_rgb_object/">
+            <default class="blue_rgb_object/visual">
+                <geom contype="0" conaffinity="0" group="1" rgba="0 0 1 1" mass="0.001"/>
+            </default>
+            <default class="blue_rgb_object/collision">
+                <geom contype="1" conaffinity="1" condim="6" group="4" friction="0.5 0.0050000000000000001 0.0001" mass="0.20000000000000001" solref="0.0040000000000000001 1"/>
+            </default>
+        </default>
+    </default>
+
     <worldbody>
         <site name="world"/>
         <light pos="0 -0.1 0.5" dir="0 0.2 -1" diffuse="0.7 0.7 0.7" specular="0.3 0.3 0.3"
                directional="true" castshadow="true"/>
         <geom name="floor" pos="0 0 0" size="0 0 0.05" type="plane" material="blue_grid"/>
 
-        <body name="target" mocap="true" pos="0.6 0.4 0.05">
-            <geom name="target"  type="cylinder" size="0.02 0.03 0.02" contype="0" conaffinity="0" rgba=".5 .5 .5 .3"/>
-            <site name="target1" type="cylinder" pos="0  .026 0" size="0.021 0.005 0.021" rgba="1 .1 .1 .3"/>
-            <site name="target2" type="cylinder" pos="0 -.026 0" size="0.021 0.005 0.021" rgba=".1 .1 1 .3"/>
+        <body name="target">
+            <freejoint/>
+            <geom name="target"  type="box" pos="0.04  0.0 0.0" size="0.02 0.03 0.02" priority="1" condim="6" friction="1 .01 .003"/>
+            <geom name="target1"  type="box" pos="-0.04 0.0 0.0" size="0.02 0.03 0.02" priority="1" condim="6" friction="1 .01 .003"/>
+            <geom name="target2"  type="box" pos="0  0.06 0.0" size="0.06 0.03 0.02" priority="1" condim="6" friction="1 .01 .003"/>
+            <geom name="target3"  type="box" pos="0  -0.06 0.0" size="0.06 0.03 0.02" priority="1" condim="6" friction="1 .01 .003"/>
+
+            <site name="target1" type="box" pos="0  .026 0.1" size="0.021 0.005 0.021" rgba="1 .1 .1 .3"/>
+            <site name="target2" type="box" pos="0 -.026 0.1" size="0.021 0.005 0.021" rgba=".1 .1 1 .3"/>
         </body>
 
         <body name="box" pos="0.4 0.5 0.2">
             <freejoint/>
-            <geom name="box"  type="cylinder" size="0.02 0.03 0.02" priority="1" condim="6" friction="1 .01 .003"/>
-            <site name="box1" type="cylinder" pos="0  .026 0" size="0.021 0.005 0.021" rgba="1 .1 .1 1"/>
-            <site name="box2" type="cylinder" pos="0 -.026 0" size="0.021 0.005 0.021" rgba=".1 .1 1 1"/>
+            <geom name="box"  type="box" size="0.01 0.02 0.02" priority="1" condim="6" friction="1 .01 .003"/>
+            <site name="box1" type="box" pos="0  .026 0.0" size="0.021 0.005 0.021" rgba="1 .1 .1 1"/>
+            <site name="box2" type="box" pos="0 -.026 0.0" size="0.021 0.005 0.021" rgba=".1 .1 1 1"/>
         </body>
     </worldbody>
 
@@ -55,7 +87,7 @@
     </contact>
 
     <keyframe>
-        <key name="home" qpos="-0.026895 0.391451 0.0199961 0.959693 0 0 -0.281049 1.00714 0.42312 -0.00198696 -1.65569 -0.05794 2.28189 0.393188 0.005 0.005"/>
+        <key name="home" qpos="-0.026895 0.391451 0.0199961 0.959693 0 0 -0.281049 1.00714 0.42312 -0.00198696 -1.65569 -0.05794 2.28189 0.393188 0.005 0.005 0.0 0.0 0.0 0.0 0.0 0.0 0.0"/>
     </keyframe>
 
     <sensor>
